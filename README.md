@@ -7,6 +7,8 @@
 
 线下验证集F1约0.74，线上测试集F1约0.73。预训练模型是[RoFormer](https://github.com/ZhuiyiTechnology/roformer)，也欢迎对比其他预训练模型的效果。
 
+测试环境：tensorflow 1.14 + keras 2.3.1 + bert4keras 0.10.5，如果在其他环境组合下报错，请根据错误信息自行调整代码。
+
 详情请看：https://kexue.fm/archives/8337
 
 ## 交流
