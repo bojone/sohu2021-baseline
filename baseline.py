@@ -20,7 +20,7 @@ jieba.initialize()
 maxlen = 512
 epochs = 5
 batch_size = 16
-learing_rate = 1e-5
+learing_rate = 2e-5
 
 # bert配置
 config_path = '/root/kg/bert/chinese_roformer_L-12_H-768_A-12/bert_config.json'
