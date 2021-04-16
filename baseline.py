@@ -139,7 +139,9 @@ def evaluate(data):
         right_a += ((y_pred * y_true) * (flag == 0)).sum()
         total_b += ((y_pred + y_true) * (flag == 1)).sum()
         right_b += ((y_pred * y_true) * (flag == 1)).sum()
-    return right_a / total_a + right_b / total_b
+    f1_a = 2.0 * right_a / total_a
+    f1_b = 2.0 * right_b / total_b
+    return {'f1': (f1_a + f1_b) / 2, 'f1_a': f1_a, 'f1_b': f1_b}
 
 
 def predict_test(filename):
@@ -162,12 +164,13 @@ class Evaluator(keras.callbacks.Callback):
 
     def on_epoch_end(self, epoch, logs=None):
         optimizer.apply_ema_weights()
-        val_f1 = evaluate(valid_generator)
-        if val_f1 > self.best_val_f1:
-            self.best_val_f1 = val_f1
+        metrics = evaluate(valid_generator)
+        if metrics['f1'] > self.best_val_f1:
+            self.best_val_f1 = metrics['f1']
             model.save_weights('best_model.weights')
         optimizer.reset_old_weights()
-        print(u'val_f1: %.5f, best_val_f1: %.5f\n' % (val_f1, self.best_val_f1))
+        metrics['best_f1'] = self.best_val_f1
+        print(metrics)
 
 
 if __name__ == '__main__':
